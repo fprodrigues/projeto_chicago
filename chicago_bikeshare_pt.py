@@ -30,8 +30,8 @@ input("Aperte Enter para continuar...")
 # TODO: Imprima as primeiras 20 linhas usando um loop para identificar os dados.
 print("\n\nTAREFA 1: Imprimindo as primeiras 20 amostras")
 
-for x in data_list[:20]:
-    print(x)
+for index in data_list[:20]:
+    print(index)
 
 # Vamos mudar o data_list para remover o cabeçalho dele.
 data_list = data_list[1:]
@@ -56,12 +56,36 @@ input("Aperte Enter para continuar...")
 # TAREFA 3
 # TODO: Crie uma função para adicionar as colunas(features) de uma lista em outra lista, na mesma ordem
 
+def generic_count(data_list, search_string):
+    """
+    Função de contagem genérica
+    Argumentos:
+        data_list: lista de dados.
+        search_string: string que será contada
+    Retorna:
+        o número de ocorrências de uma string na lista
+    """
+    counter = 0
+    for data in data_list:
+        if data == search_string:
+            counter +=1
+    return counter
+
 
 def column_to_list(data, index):
+    """
+    Função que retorna uma lista de uma tabela de dados, por um index
+    Argumentos:
+        data: tabela de dados.
+        index: a posição da coluna que deseja isolar.
+    Retorna:
+        Retorna a nova lista com a coluna que deseja isolar.
+
+    """
     column_list = []
     # Dica: Você pode usar um for para iterar sobre as amostras, pegar a feature pelo seu índice, e dar append para uma lista
-    for x in data:
-        column_list.append(x[index])
+    for column in data:
+        column_list.append(column[index])
     return column_list
 
 
@@ -85,8 +109,8 @@ input("Aperte Enter para continuar...")
 male = 0
 female = 0
 
-male = column_to_list(data_list, -2).count('Male')
-female = column_to_list(data_list, -2).count('Female')
+male = generic_count(column_to_list(data_list, -2), 'Male')
+female = generic_count(column_to_list(data_list, -2),'Female')
 
 # Verificando o resultado
 print("\nTAREFA 4: Imprimindo quantos masculinos e femininos nós encontramos")
@@ -104,7 +128,6 @@ input("Aperte Enter para continuar...")
 
 
 
-
 def count_gender(data_list):
     """
     Função de contagem de gêneros
@@ -116,8 +139,8 @@ def count_gender(data_list):
     """
     male = 0
     female = 0
-    male = column_to_list(data_list, -2).count('Male')
-    female = column_to_list(data_list, -2).count('Female')
+    male = generic_count(column_to_list(data_list, -2), 'Male')
+    female = generic_count(column_to_list(data_list, -2),'Female')
     return [male, female]
 
 
@@ -151,9 +174,10 @@ def most_popular_gender(data_list):
 
     """
     answer = ""
-    if count_gender(data_list)[0] > count_gender(data_list)[1]:
+    male, female = count_gender(data_list)
+    if male > female:
         answer = "Male"
-    elif count_gender(data_list)[0] < count_gender(data_list)[1]:
+    elif female < male:
         answer = "Female"
     else:
         answer = "Equal"
@@ -199,8 +223,8 @@ def count_user_type(data_list):
     """
     customer = 0
     subscriber = 0
-    customer = column_to_list(data_list, -3).count('Customer')
-    subscriber = column_to_list(data_list, -3).count('Subscriber')
+    customer = generic_count(column_to_list(data_list, -3),'Customer')
+    subscriber = generic_count(column_to_list(data_list, -3), 'Subscriber')
     return [customer, subscriber]
 
 
@@ -241,8 +265,8 @@ mean_trip = 0.
 median_trip = 0.
 
 trip_duration_list_sorted = []
-for i in trip_duration_list:
-    trip_duration_list_sorted.append(float(i))
+for duration in trip_duration_list:
+    trip_duration_list_sorted.append(float(duration))
 
 trip_duration_list_sorted = sorted(trip_duration_list_sorted)
 min_trip = trip_duration_list_sorted[0]
@@ -253,9 +277,14 @@ for duration in trip_duration_list_sorted:
 
 mean_trip = mean_trip / len(trip_duration_list_sorted)
 # --- para ajudar a pegar a mediana, como o tamanho da lista é ímpar, adicionamos uma variavel auxiliar, com o len + 1
-median_trip_position = int((len(trip_duration_list_sorted)+1) / 2)
-median_trip = trip_duration_list_sorted[median_trip_position]
 
+if len(trip_duration_list_sorted)%2 == 0:
+    median_trip_position_one = int((len(trip_duration_list_sorted)) / 2)
+    median_trip_position_two = median_trip_position_one + 1
+    median_trip = ((trip_duration_list_sorted[median_trip_position_one]+trip_duration_list_sorted[median_trip_position_two])/2)
+else:
+    median_trip_position = int((len(trip_duration_list_sorted)+1) / 2)
+    median_trip = trip_duration_list_sorted[median_trip_position]
 
 print("\nTAREFA 9: Imprimindo o mínimo, máximo, média, e mediana")
 print("Min: ", min_trip, "Max: ", max_trip,
@@ -310,7 +339,7 @@ def count_items(column_list):
     count_items = []
     item_types = set(column_list)
     for x in item_types:
-        aux = column_list.count(x)
+        aux = generic_count(column_list, x)
         count_items.append(aux)
     return item_types, count_items
 

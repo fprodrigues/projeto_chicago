@@ -16,10 +16,11 @@ print("Número de linhas:")
 print(len(data_list))
 
 # Imprimindo a primeira linha de data_list para verificar se funcionou.
+
 print("Linha 0: ")
 print(data_list[0])
-# É o cabeçalho dos dados, para que possamos identificar as colunas.
 
+# É o cabeçalho dos dados, para que possamos identificar as colunas.
 # Imprimindo a segunda linha de data_list, ela deveria conter alguns dados
 print("Linha 1: ")
 print(data_list[1])
@@ -101,8 +102,11 @@ input("Aperte Enter para continuar...")
 # TODO: Crie uma função para contar os gêneros. Retorne uma lista.
 # Isso deveria retornar uma lista com [count_male, count_female] (exemplo: [10, 15] significa 10 Masculinos, 15 Femininos)
 
-# def count_gender(data_list):
-"""
+
+
+
+def count_gender(data_list):
+    """
     Função de contagem de gêneros
     Argumentos:
         data_list: lista de dados.
@@ -110,9 +114,6 @@ input("Aperte Enter para continuar...")
         uma lista com o primeiro elemento com o total de Males e o segundo, de Females.
 
     """
-
-
-def count_gender(data_list):
     male = 0
     female = 0
     male = column_to_list(data_list, -2).count('Male')
@@ -138,8 +139,10 @@ input("Aperte Enter para continuar...")
 # TODO: Crie uma função que pegue o gênero mais popular, e retorne este gênero como uma string.
 # Esperamos ver "Male", "Female", ou "Equal" como resposta.
 
-# def most_popular_gender(data_list):
-"""
+
+
+def most_popular_gender(data_list):
+    """
     Função de comparação entre valores de uma lista de 2 valores
     Argumentos:
         data_list: lista de dados.
@@ -147,9 +150,6 @@ input("Aperte Enter para continuar...")
         uma string com qual dos gêneros tem mais na lista.
 
     """
-
-
-def most_popular_gender(data_list):
     answer = ""
     if count_gender(data_list)[0] > count_gender(data_list)[1]:
         answer = "Male"
@@ -187,8 +187,9 @@ input("Aperte Enter para continuar...")
 # TODO: Crie um gráfico similar para user_types. Tenha certeza que a legenda está correta.
 print("\nTAREFA 7: Verifique o gráfico!")
 
-# def count_user_type(data_list):
-"""
+
+def count_user_type(data_list):
+    """
     Função de contagem de tipos de usuários
     Argumentos:
         data_list: lista de dados.
@@ -196,9 +197,6 @@ print("\nTAREFA 7: Verifique o gráfico!")
         uma lista com o primeiro elemento com o total de Customers e o segundo, de Subscribers.
 
     """
-
-
-def count_user_type(data_list):
     customer = 0
     subscriber = 0
     customer = column_to_list(data_list, -3).count('Customer')
@@ -242,21 +240,21 @@ max_trip = 0.
 mean_trip = 0.
 median_trip = 0.
 
-nova_lista = []
+trip_duration_list_sorted = []
 for i in trip_duration_list:
-    nova_lista.append(float(i))
+    trip_duration_list_sorted.append(float(i))
 
-nova_lista = sorted(nova_lista)
-min_trip = nova_lista[0]
-max_trip = nova_lista[-1]
+trip_duration_list_sorted = sorted(trip_duration_list_sorted)
+min_trip = trip_duration_list_sorted[0]
+max_trip = trip_duration_list_sorted[-1]
 
-for x in nova_lista:
-    mean_trip += x
+for duration in trip_duration_list_sorted:
+    mean_trip += duration
 
-mean_trip = mean_trip / len(nova_lista)
+mean_trip = mean_trip / len(trip_duration_list_sorted)
 # --- para ajudar a pegar a mediana, como o tamanho da lista é ímpar, adicionamos uma variavel auxiliar, com o len + 1
-aux_index = int((len(nova_lista)+1) / 2)
-median_trip = nova_lista[aux_index]
+median_trip_position = int((len(trip_duration_list_sorted)+1) / 2)
+median_trip = trip_duration_list_sorted[median_trip_position]
 
 
 print("\nTAREFA 9: Imprimindo o mínimo, máximo, média, e mediana")
